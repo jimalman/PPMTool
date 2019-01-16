@@ -1,5 +1,6 @@
 import projects from "../apis/projects";
 import { GET_ERRORS } from "./types";
+import { GET_PROJECTS } from "./types";
 
 // Create
 export const createProject = (project, history) => async dispatch => {
@@ -12,4 +13,12 @@ export const createProject = (project, history) => async dispatch => {
       payload: err.response.data
     });
   }
+};
+
+export const getProjects = () => async dispatch => {
+  const response = await projects.get("./api/project/all");
+  dispatch({
+    type: GET_PROJECTS,
+    payload: response.data
+  });
 };
