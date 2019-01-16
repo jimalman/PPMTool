@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import classnames from "classnames";
+
 import { createProject } from "../../actions";
 
 class AddProject extends Component {
@@ -45,34 +47,55 @@ class AddProject extends Component {
                   <div className="form-group">
                     <input
                       type="text"
-                      className="form-control form-control-lg "
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": this.props.errors.projectName
+                      })}
                       placeholder="Project Name"
                       name="projectName"
                       value={this.state.projectName}
                       onChange={this.onChange}
                     />
+                    {this.props.errors.projectName && (
+                      <div className="invalid-feedback">
+                        {this.props.errors.projectName}
+                      </div>
+                    )}
                   </div>
                   <div className="form-group">
                     <input
                       type="text"
-                      className="form-control form-control-lg"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": this.props.errors.projectIdentifier
+                      })}
                       placeholder="Unique Project ID"
                       name="projectIdentifier"
                       onChange={this.onChange}
                       state={this.state.projectIdentifier}
                     />
+                    {this.props.errors.projectIdentifier && (
+                      <div className="invalid-feedback">
+                        {this.props.errors.projectIdentifier}
+                      </div>
+                    )}
                   </div>
                   {
                     // <!-- disabled for Edit Only!! remove "disabled" for the Create operation -->
                   }
                   <div className="form-group">
                     <textarea
-                      className="form-control form-control-lg"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": this.props.errors.description
+                      })}
                       placeholder="Project Description"
                       name="description"
                       value={this.state.description}
                       onChange={this.onChange}
                     />
+                    {this.props.errors.description && (
+                      <div className="invalid-feedback">
+                        {this.props.errors.description}
+                      </div>
+                    )}
                   </div>
                   <h6>Start Date</h6>
                   <div className="form-group">
@@ -110,10 +133,17 @@ class AddProject extends Component {
 }
 
 AddProject.propTypes = {
-  createProject: PropTypes.func.isRequired
+  createProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => {
+  return {
+    errors: state.errors
+  };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   { createProject }
 )(AddProject);
