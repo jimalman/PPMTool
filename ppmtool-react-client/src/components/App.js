@@ -7,6 +7,7 @@ import "./App.css";
 import Dashboard from "./Dashboard";
 import Header from "./Layout/Header";
 import AddProject from "./Project/AddProject";
+import UpdateProject from "./Project/UpdateProject";
 import store from "../store";
 
 export default class App extends Component {
@@ -17,7 +18,8 @@ export default class App extends Component {
           <div>
             <Header />
             <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/addproject" component={AddProject} />
+            <Route exact path="/addProject" component={AddProject} />
+            <Route exact path="/updateProject/:id" component={UpdateProject} />
           </div>
         </Router>
       </Provider>

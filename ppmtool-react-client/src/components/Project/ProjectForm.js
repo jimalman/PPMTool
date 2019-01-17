@@ -1,55 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import classnames from "classnames";
 
-import { createProject } from "../../actions";
-import Date from "./Date";
-
-class AddProject extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      projectName: "",
-      projectIdentifier: "",
-      description: "",
-      startDate: "",
-      endDate: ""
-    };
-  }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    const newProject = {
-      projectName: this.state.projectName,
-      projectIdentifier: this.state.projectIdentifier,
-      description: this.state.description,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    };
-    this.props.createProject(newProject, this.props.history);
-  };
-
-  renderInput(type, placeHolder, name) {
-    return (
-      <input
-        type={type}
-        className={classnames("form-control form-control-lg", {
-          "is-invalid": this.props.errors[name]
-        })}
-        placeholder={placeHolder}
-        name={name}
-        value={this.state[name]}
-        onChange={this.onChange}
-      />
-    );
-  }
-
+export default class ProjectForm extends Component {
   render() {
     return (
       <div>
@@ -57,11 +8,20 @@ class AddProject extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
-                <h5 className="display-4 text-center">Create Project form</h5>
+                <h5 className="display-4 text-center">{props.title}</h5>
                 <hr />
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
-                    {this.renderInput("text", "Project Name", "projectName")}
+                    <input
+                      type="text"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": props.errors.projectName
+                      })}
+                      placeholder="Project Name"
+                      name="projectName"
+                      value={this.state.projectName}
+                      onChange={this.onChange}
+                    />
                     {this.props.errors.projectName && (
                       <div className="invalid-feedback">
                         {this.props.errors.projectName}
@@ -69,11 +29,16 @@ class AddProject extends Component {
                     )}
                   </div>
                   <div className="form-group">
-                    {this.renderInput(
-                      "text",
-                      "Unique Project ID",
-                      "projectIdentifier"
-                    )}
+                    <input
+                      type="text"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": this.props.errors.projectIdentifier
+                      })}
+                      placeholder="Unique Project ID"
+                      name="projectIdentifier"
+                      onChange={this.onChange}
+                      state={this.state.projectIdentifier}
+                    />
                     {this.props.errors.projectIdentifier && (
                       <div className="invalid-feedback">
                         {this.props.errors.projectIdentifier}
@@ -124,19 +89,3 @@ class AddProject extends Component {
     );
   }
 }
-
-AddProject.propTypes = {
-  createProject: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => {
-  return {
-    errors: state.errors
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { createProject }
-)(AddProject);
