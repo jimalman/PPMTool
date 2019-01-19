@@ -23,6 +23,8 @@ UpdateProject.propTypes = {
   getProject: PropTypes.func.isRequired
 };
 
+//mapStateToProps = state = {};
+
 export default connect(
   null,
   { getProject }
