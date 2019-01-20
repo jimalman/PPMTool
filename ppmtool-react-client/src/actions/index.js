@@ -6,6 +6,10 @@ export const createProject = (project, history) => async dispatch => {
   try {
     const response = await projects.post("./api/project", project);
     history.push("/dashboard");
+    dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    });
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
@@ -23,9 +27,13 @@ export const getProjects = () => async dispatch => {
 };
 
 export const getProject = (id, history) => async dispatch => {
-  const response = await projects.get(`./api/project/${id}`);
-  dispatch({
-    type: GET_PROJECT,
-    payload: response.data
-  });
+  try {
+    const response = await projects.get(`./api/project/${id}`);
+    dispatch({
+      type: GET_PROJECT,
+      payload: response.data
+    });
+  } catch (error) {
+    history.push("/dashboard");
+  }
 };

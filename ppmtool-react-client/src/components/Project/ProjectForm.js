@@ -61,13 +61,13 @@ export default class ProjectForm extends Component {
           <Date
             title="Start Date"
             name="startDate"
-            value={this.props.startDate}
+            value={this.props.startDate || ""}
             onChange={this.props.onChange}
           />
           <Date
             title="Estimated End Date"
             name="endDate"
-            value={this.props.endDate}
+            value={this.props.endDate || ""}
             onChange={this.props.onChange}
           />
           <input type="submit" className="btn btn-primary btn-block mt-4" />
