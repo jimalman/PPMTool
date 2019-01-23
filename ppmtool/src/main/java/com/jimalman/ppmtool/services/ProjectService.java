@@ -3,6 +3,7 @@ package com.jimalman.ppmtool.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jimalman.ppmtool.domain.Backlog;
 import com.jimalman.ppmtool.domain.Project;
 import com.jimalman.ppmtool.exceptions.ProjectIdException;
 import com.jimalman.ppmtool.repositories.ProjectRepository;
@@ -16,6 +17,13 @@ public class ProjectService {
 	public Project saveOrUpdateProject(Project project) {
 		try {
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			
+			if(project.getId() == null) {
+				Backlog backlog = new Backlog();
+				project.setBacklog(backlog);
+				backlog.setProject(project);
+			}
+			
 			return projectRepository.save(project);
 		} catch (Exception e) {
 			throw new ProjectIdException("Project ID '" + project.getProjectIdentifier().toUpperCase() + "' already exists");
