@@ -25,24 +25,28 @@ public class ProjectTaskService {
 		// Set the BL to the PT
 		projectTask.setBacklog(backlog);
 		// Want project sequence like PROJ-1 PROJ-2
-		Integer BacklogSequence = backlog.getPTSequence();
+		Integer backlogSequence = backlog.getPTSequence();
 		// Update BL sequence
-		BacklogSequence++;
+		backlogSequence++;
+		backlog.setPTSequence(backlogSequence);
 		
 		// Add Sequence to Project Task
-		projectTask.setProjectSequence(projectIdentifier + "-" + BacklogSequence);
+		projectTask.setProjectSequence(projectIdentifier + "-" + backlogSequence);
 		projectTask.setProjectIdentifier(projectIdentifier);
 		
 		// Initial priority when priority is null
-		//if(projectTask.getPriority() == 0 || projectTask.getPriority() == null) {
-		//	projectTask.setPriority(3);
-		//}
+		if(projectTask.getPriority() == null ) {
+			projectTask.setPriority(3);
+		}
 		// Initial status when status is null
 		if(projectTask.getStatus() == "" || projectTask.getStatus() == null) {
 			projectTask.setStatus("TO_DO");
 		}
 		
 		return projectTaskRepository.save(projectTask);
-		
+	}
+	
+	public Iterable<ProjectTask>findBacklogById(String id) {
+		return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
 	}
 }
