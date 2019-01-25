@@ -7,5 +7,5 @@ import com.jimalman.ppmtool.domain.Backlog;
 
 @Repository
 public interface BacklogRepository extends CrudRepository<Backlog, Long> {
-
+	Backlog findByProjectIdentifier(String Identifier);
 }
