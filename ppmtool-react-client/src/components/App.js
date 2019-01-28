@@ -8,6 +8,8 @@ import Dashboard from "./Dashboard";
 import Header from "./Layout/Header";
 import AddProject from "./Project/AddProject";
 import UpdateProject from "./Project/UpdateProject";
+import ProjectBoard from "./ProjectBoard/ProjectBoard";
+import AddProjectTask from "./ProjectBoard/ProjectTasks/AddProjectTask";
 import store from "../store";
 
 export default class App extends Component {
@@ -20,6 +22,12 @@ export default class App extends Component {
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
+            <Route exact path="/projectBoard/:id" component={ProjectBoard} />
+            <Route
+              exact
+              path="/addProjectTask/:id"
+              component={AddProjectTask}
+            />
           </div>
         </Router>
       </Provider>
