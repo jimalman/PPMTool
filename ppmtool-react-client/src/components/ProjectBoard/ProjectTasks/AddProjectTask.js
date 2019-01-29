@@ -1,19 +1,60 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import classnames from "classnames";
+import { addProjectTask } from "../../../actions/index";
+import PropTypes from "prop-types";
+
+import Date from "../../Project/Date";
 
 class AddProjectTask extends Component {
+  constructor(props) {
+    super(props);
+    const { id } = this.props.match.params;
+
+    this.state = {
+      summary: "",
+      acceptanceCriteria: "",
+      status: "",
+      priority: 0,
+      dueDate: "",
+      projectIdentifier: id
+    };
+  }
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    const newProjectTask = {
+      summary: this.state.summary,
+      acceptanceCriteria: this.state.acceptanceCriteria,
+      status: this.state.status,
+      priority: this.state.priority,
+      dueDate: this.state.dueDate,
+      projectIdentifier: this.state.projectIdentifier
+    };
+    this.props.addProjectTask(
+      this.state.projectIdentifier,
+      newProjectTask,
+      this.props.history
+    );
+  };
+
   render() {
+    const { id } = this.props.match.params;
     return (
       <div>
         <div className="add-PBI">
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
-                <a href="#" className="btn btn-light">
+                <Link to={`/projectBoard/${id}`} className="btn btn-light">
                   Back to Project Board
-                </a>
-                <h4 className="display-4 text-center">
-                  Add /Update Project Task
-                </h4>
+                </Link>
+                <h4 className="display-4 text-center">Add Project Task</h4>
                 <p className="lead text-center">Project Name + Project Code</p>
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
@@ -22,6 +63,8 @@ class AddProjectTask extends Component {
                       className="form-control form-control-lg"
                       name="summary"
                       placeholder="Project Task summary"
+                      value={this.state.summary}
+                      onChange={this.onChange}
                     />
                   </div>
                   <div className="form-group">
@@ -29,20 +72,22 @@ class AddProjectTask extends Component {
                       className="form-control form-control-lg"
                       placeholder="Acceptance Criteria"
                       name="acceptanceCriteria"
+                      value={this.state.acceptanceCriteria}
+                      onChange={this.onChange}
                     />
                   </div>
-                  <h6>Due Date</h6>
-                  <div className="form-group">
-                    <input
-                      type="date"
-                      className="form-control form-control-lg"
-                      name="dueDate"
-                    />
-                  </div>
+                  <Date
+                    title="Due Date"
+                    name="dueDate"
+                    value={this.state.dueDate || ""}
+                    onChange={this.onChange}
+                  />
                   <div className="form-group">
                     <select
                       className="form-control form-control-lg"
                       name="priority"
+                      value={this.state.priority}
+                      onChange={this.onChange}
                     >
                       <option value={0}>Select Priority</option>
                       <option value={1}>High</option>
@@ -55,6 +100,8 @@ class AddProjectTask extends Component {
                     <select
                       className="form-control form-control-lg"
                       name="status"
+                      value={this.state.status}
+                      onChange={this.onChange}
                     >
                       <option value="">Select Status</option>
                       <option value="TO_DO">TO DO</option>
@@ -77,4 +124,11 @@ class AddProjectTask extends Component {
   }
 }
 
-export default AddProjectTask;
+AddProjectTask.propTypes = {
+  addProjectTask: PropTypes.func.isRequired
+};
+
+export default connect(
+  null,
+  { addProjectTask }
+)(AddProjectTask);
