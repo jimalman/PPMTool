@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_ERRORS, GET_BACKLOG, GET_PROJECTS, DELETE_PROJECT } from "./types";
+import {
+  GET_ERRORS,
+  GET_BACKLOG,
+  GET_PROJECTS,
+  DELETE_PROJECT,
+  GET_PROJECT_TASK
+} from "./types";
 
 export const addProjectTask = (
   backlogId,
@@ -28,5 +34,43 @@ export const getBacklog = backlogId => async dispatch => {
       type: GET_BACKLOG,
       payload: response.data
     });
-  } catch (err) {}
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+export const getProjectTask = (backlogId, ptId, history) => async dispatch => {
+  try {
+    const response = await axios.get(`/api/backlog/${backlogId}/${ptId}`);
+    dispatch({
+      type: GET_PROJECT_TASK,
+      payload: response.data
+    });
+  } catch (err) {
+    history.push("/dashboard");
+  }
+};
+
+export const updateProjectTask = (
+  backlogId,
+  ptId,
+  projectTask,
+  history
+) => async dispatch => {
+  try {
+    await axios.patch(`/api/backlog/${backlogId}/${ptId}`, projectTask);
+    history.push(`/projectBoard/${backlogId}`);
+    dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
 };

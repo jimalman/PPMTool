@@ -10,6 +10,7 @@ import AddProject from "./Project/AddProject";
 import UpdateProject from "./Project/UpdateProject";
 import ProjectBoard from "./ProjectBoard/ProjectBoard";
 import AddProjectTask from "./ProjectBoard/ProjectTasks/AddProjectTask";
+import UpdateProjectTask from "./ProjectBoard/ProjectTasks/UpdateProjectTask";
 import store from "../store";
 
 export default class App extends Component {
@@ -27,6 +28,11 @@ export default class App extends Component {
               exact
               path="/addProjectTask/:id"
               component={AddProjectTask}
+            />
+            <Route
+              exact
+              path="/updateProjectTask/:backlogId/:ptId"
+              component={UpdateProjectTask}
             />
           </div>
         </Router>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import classnames from "classnames";
 import { addProjectTask } from "../../../actions/index";
 import PropTypes from "prop-types";
 
