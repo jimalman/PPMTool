@@ -8,7 +8,8 @@ import {
 import {
   addProjectTask,
   getProjectTask,
-  updateProjectTask
+  updateProjectTask,
+  deleteProjectTask
 } from "./backlogActions";
 
 export {
@@ -18,5 +19,6 @@ export {
   getProjects,
   addProjectTask,
   getProjectTask,
-  updateProjectTask
+  updateProjectTask,
+  deleteProjectTask
 };
