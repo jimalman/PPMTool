@@ -1,4 +1,4 @@
-package security;
+package com.jimalman.ppmtool.security;
 
 import java.io.IOException;
 
