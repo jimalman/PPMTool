@@ -1,5 +1,7 @@
 package com.jimalman.ppmtool.web;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +34,18 @@ public class BacklogController {
 	private ValidationErrorService validationErrorService;
 	
 	@PostMapping("/{backlogId}")
-	public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask, BindingResult result, @PathVariable String backlogId) {
+	public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask, BindingResult result, @PathVariable String backlogId, Principal principal) {
 		ResponseEntity<?> errorMap = validationErrorService.ValidationService(result);
 		if(errorMap != null) return errorMap;
 		
-		ProjectTask projectTask1 = projectTaskService.addProjectTask(backlogId, projectTask);
+		ProjectTask projectTask1 = projectTaskService.addProjectTask(backlogId, projectTask, principal.getName());
 		
 		return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{backlogId}")
-	public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlogId) {
-		return projectTaskService.findBacklogById(backlogId);
+	public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlogId, Principal principal) {
+		return projectTaskService.findBacklogById(backlogId, principal.getName());
 	}
 	
 	@GetMapping("/{backlogId}/{ptId}")
