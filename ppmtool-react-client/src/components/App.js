@@ -12,6 +12,9 @@ import ProjectBoard from "./ProjectBoard/ProjectBoard";
 import AddProjectTask from "./ProjectBoard/ProjectTasks/AddProjectTask";
 import UpdateProjectTask from "./ProjectBoard/ProjectTasks/UpdateProjectTask";
 import store from "../store";
+import Landing from "./Layout/Landing";
+import Register from "./UserManagement/Register";
+import Login from "./UserManagement/Login";
 
 export default class App extends Component {
   render() {
@@ -20,6 +23,15 @@ export default class App extends Component {
         <Router>
           <div>
             <Header />
+            {
+              // Public Routes
+            }
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            {
+              // Private Routes
+            }
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
