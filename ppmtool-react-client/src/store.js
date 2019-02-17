@@ -2,16 +2,29 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import reducers from "./reducers";
 
-const middleware = { thunk };
+const initialState = {};
+const middleware = [thunk];
 
 let store;
 
-if (window.navigator.userAgent.includes("Chrome")) {
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+const ReactReduxDevTools =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
+if (window.navigator.userAgent.includes("Chrome") && ReactReduxDevTools) {
+  store = createStore(
+    reducers,
+    initialState,
+    compose(
+      applyMiddleware(...middleware),
+      ReactReduxDevTools
+    )
+  );
 } else {
-  store = createStore(reducers, compose(applyMiddleware(...middleware)));
+  store = createStore(
+    reducers,
+    initialState,
+    compose(applyMiddleware(...middleware))
+  );
 }
 
 export default store;

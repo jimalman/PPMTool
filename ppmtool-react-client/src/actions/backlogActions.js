@@ -2,8 +2,6 @@ import axios from "axios";
 import {
   GET_ERRORS,
   GET_BACKLOG,
-  GET_PROJECTS,
-  DELETE_PROJECT,
   GET_PROJECT_TASK,
   DELETE_PROJECT_TASK
 } from "./types";
@@ -77,7 +75,7 @@ export const updateProjectTask = (
 };
 
 export const deleteProjectTask = (backlogId, ptId) => async dispatch => {
-  if (window.confirm("Are you sure you want to delete project task ${ptId}?")) {
+  if (window.confirm(`Are you sure you want to delete project task ${ptId}?`)) {
     await axios.delete(`/api/backlog/${backlogId}/${ptId}`);
     dispatch({
       type: DELETE_PROJECT_TASK,

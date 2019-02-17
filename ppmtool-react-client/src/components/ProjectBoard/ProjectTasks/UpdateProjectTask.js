@@ -9,7 +9,6 @@ import ProjectTaskForm from "./ProjectTaskForm";
 class UpdateProjectTask extends Component {
   constructor(props) {
     super(props);
-    const { id } = this.props.match.params;
 
     this.state = {
       id: "",
@@ -81,7 +80,7 @@ class UpdateProjectTask extends Component {
   }
 
   render() {
-    const { backlogId, ptId } = this.props.match.params;
+    const { backlogId } = this.props.match.params;
     return (
       <div>
         <div className="add-PBI">

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import ProjectTask from "./ProjectTasks/ProjectTask";
 
 class Backlog extends Component {
@@ -18,7 +17,7 @@ class Backlog extends Component {
       let status = tasks[i].props.projectTask.status;
       if (status === "TO_DO") {
         todoItems.push(tasks[i]);
-      } else if (status == "IN_PROGRESS") {
+      } else if (status === "IN_PROGRESS") {
         inProgressItems.push(tasks[i]);
       } else {
         doneItems.push(tasks[i]);
